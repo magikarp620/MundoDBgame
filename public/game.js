@@ -17,7 +17,8 @@ let socket = io()
 function preload () {
     console.log("load")
     this.load.image("background", 'images/baronpit.jpg')
-    this.load.image("char1", "images/character1.webp");
+    this.load.image("char1", "images/character1.webp")
+    this.load.image("knife", "images/knife.png")
 }
 
 function create () {
