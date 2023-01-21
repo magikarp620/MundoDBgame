@@ -13,6 +13,7 @@ const game = new Phaser.Game(config)
 let char1
 let targetx = 280
 let targety = 250
+let socket = io() 
 function preload () {
     console.log("load")
     this.load.image("background", 'images/baronpit.jpg')
@@ -30,7 +31,7 @@ function create () {
 
 function update () {
     const distance = Phaser.Math.Distance.Between(targetx,targety, char1.x, char1.y);
-    
+    socket.emit("pos", targetx + " " +targety)
     if(distance < 3){
         char1.setVelocity(0,0)
     }
