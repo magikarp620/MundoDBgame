@@ -11,7 +11,7 @@ const room = new game.Game()
 io.on('connection', (socket) => {
     const interval = setInterval(()=>{
         io.emit('update',room.update())
-    },100)
+    },33)
     console.log(`a user connected with id: ${socket.id}`);
     if(!room.addPlayer(socket.id)){
         console.log("room full")

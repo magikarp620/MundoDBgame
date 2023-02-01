@@ -1,5 +1,5 @@
 const p = require('./player.js')
-const SPEED = 30;
+const SPEED = 10;
 class Game{
 
     ids = {}
