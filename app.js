@@ -1,3 +1,4 @@
+const game = require('./game')
 const express = require('express');
 const app = express();
 const http = require('http');
@@ -6,16 +7,29 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 
 const port = 3000
-
-
-
+const room = new game.Game()
 io.on('connection', (socket) => {
-    console.log('a user connected');
+    const interval = setInterval(()=>{
+        io.emit('update',room.update())
+    },100)
+    console.log(`a user connected with id: ${socket.id}`);
+    if(!room.addPlayer(socket.id)){
+        console.log("room full")
+    }
+    console.log(room.numPlayers())
     socket.on("pos", (msg) =>{
-        console.log(`position : ${msg}`)
+
+        if(socket.id in room.ids){
+            room.ids[socket.id].target = msg
+        }
     })
     socket.on('disconnect', () => {
         console.log('user disconnected');
+        room.removePlayer(socket.id)
+        console.log(room.numPlayers())
+        if(room.numPlayers() === 0){
+            clearInterval(interval)
+        }
     });
 });
 
