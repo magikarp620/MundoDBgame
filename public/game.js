@@ -15,7 +15,8 @@ const game = new Phaser.Game(config)
 let char1
 let targetx = 280
 let targety = 250
-let socket = io() 
+let socket = io()
+
 function preload () {
     console.log("load")
     this.load.image("background", 'images/baronpit.jpg')
@@ -45,20 +46,35 @@ function create () {
     knifes.createMultiple(3, 'knife');
     knifes.setAll('checkWorldBounds', true);
     knifes.setAll('outOfBoundsKill', true);
+    char2 = this.physics.add.sprite(420,450,'char1')
+    socket.on('update',(msg)=>{
+        console.log(msg)
+        char1.x = msg[1]['x']
+        char1.y = msg[1]['y']
+        char2.x = msg[2]['x']
+        char2.y = msg[2]['y']
+    })
+    char1.setScale(0.08)
+    char2.setScale(0.08)
 }
 
 
 function update () {
+    /*
     const distance = Phaser.Math.Distance.Between(targetx,targety, char1.x, char1.y);
-    socket.emit("pos", targetx + " " +targety)
+
     if(distance < 3){
         char1.setVelocity(0,0)
     }
+
+     */
     const pointer = this.input.activePointer;
     if(pointer.rightButtonDown()){
         targetx = pointer.worldX
         targety = pointer.worldY
-        this.physics.moveTo(char1,pointer.worldX,pointer.worldY,240)
+        console.log("down")
+        socket.emit("pos", {targetx,targety })
+        //this.physics.moveTo(char1,pointer.worldX,pointer.worldY,240)
     }    
     if(keyQ.isDown){  
         attack();
