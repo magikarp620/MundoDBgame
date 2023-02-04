@@ -2,7 +2,7 @@
   "name": "mundodbgame",
   "version": "1.0.0",
   "description": "",
-  "main": "game.js",
+  "main": "room.js",
 
   "scripts": {
     "start": "node app.js",

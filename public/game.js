@@ -38,13 +38,14 @@ function create () {
     'background')
     char1 = this.physics.add.sprite(280, 250, 'char1');
     char1.setScale(0.08);
-    char2 = this.physics.add.sprite(420,450,'char1')
+    let char2 = this.physics.add.sprite(420, 450, 'char1')
     socket.on('update',(msg)=>{
-        console.log(msg)
         char1.x = msg[1]['x']
         char1.y = msg[1]['y']
-        char2.x = msg[2]['x']
-        char2.y = msg[2]['y']
+        if(2 in msg) {
+            char2.x = msg[2]['x']
+            char2.y = msg[2]['y']
+        }
     })
     char1.setScale(0.08)
     char2.setScale(0.08)
@@ -64,7 +65,6 @@ function update () {
     if(pointer.rightButtonDown()){
         targetx = pointer.worldX
         targety = pointer.worldY
-        console.log("down")
         socket.emit("pos", {targetx,targety })
         //this.physics.moveTo(char1,pointer.worldX,pointer.worldY,240)
     }    

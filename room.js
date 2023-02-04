@@ -1,6 +1,6 @@
 const p = require('./player.js')
-const SPEED = 10;
-class Game{
+const SPEED = 5;
+class Room {
 
     ids = {}
     #size
@@ -46,4 +46,4 @@ class Game{
     }
 }
 
-module.exports = {Game}
+module.exports = {Game: Room}

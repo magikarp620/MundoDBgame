@@ -1,4 +1,4 @@
-const game = require('./game')
+const game = require('./room')
 const express = require('express');
 const app = express();
 const http = require('http');
@@ -11,7 +11,7 @@ const room = new game.Game()
 io.on('connection', (socket) => {
     const interval = setInterval(()=>{
         io.emit('update',room.update())
-    },33)
+    },40)
     console.log(`a user connected with id: ${socket.id}`);
     if(!room.addPlayer(socket.id)){
         console.log("room full")

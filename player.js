@@ -14,7 +14,8 @@ class Player{
 
         const moveX = this.target['targetx'] - this.x;
         const moveY = this.target['targety'] - this.y;
-        speed = Math.min(moveX*moveX + moveY*moveY,speed)
+
+        speed = Math.min(Math.sqrt(moveX*moveX + moveY*moveY),speed)
         const angle = Math.atan2(moveY,moveX)
         this.x += speed*Math.cos(angle)
         this.y += speed*Math.sin(angle)
