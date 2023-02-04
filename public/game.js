@@ -8,7 +8,6 @@ const config = {
         //init: init,
         create:create,
         update:update,
-        attack:attack
     }
 }
 const game = new Phaser.Game(config)
@@ -39,13 +38,6 @@ function create () {
     'background')
     char1 = this.physics.add.sprite(280, 250, 'char1');
     char1.setScale(0.08);
-    keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
-    knifes = game.add.group();
-    knifes.enableBody = true;
-    knifes.physicsBodyType = Phaser.Physics.ARCADE;
-    knifes.createMultiple(3, 'knife');
-    knifes.setAll('checkWorldBounds', true);
-    knifes.setAll('outOfBoundsKill', true);
     char2 = this.physics.add.sprite(420,450,'char1')
     socket.on('update',(msg)=>{
         console.log(msg)
@@ -76,13 +68,4 @@ function update () {
         socket.emit("pos", {targetx,targety })
         //this.physics.moveTo(char1,pointer.worldX,pointer.worldY,240)
     }    
-    if(keyQ.isDown){  
-        attack();
-    }
-}
-
-function attack() {
-    bullet.reset(char1.x,char1.y);
-
-    game.physics.arcade.moveToPointer(knife, 300);
 }
