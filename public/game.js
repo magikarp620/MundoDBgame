@@ -5,8 +5,10 @@ const config = {
     height: 720,
     scene: {
         preload: preload,
+        //init: init,
         create:create,
-        update:update
+        update:update,
+        attack:attack
     }
 }
 const game = new Phaser.Game(config)
@@ -20,15 +22,31 @@ function preload () {
     this.load.image("char1", "images/character1.webp")
     this.load.image("knife", "images/knife.png")
 }
-
+/*
+function init() {
+	// Listen to space & enter keys
+	var keys = [Phaser.KeyCode.Q];
+	// Create Phaser.Key objects for listening to the state
+	phaserKeys = game.input.keyboard.addKeys(keys);
+	// Capture these keys to stop the browser from receiving this event
+	game.input.keyboard.addKeyCapture(keys);
+}
+*/
 function create () {
     this.input.mouse.disableContextMenu();
     this.add.image(this.cameras.main.width / 2,this.cameras.main.height / 2, 
     'background')
     char1 = this.physics.add.sprite(280, 250, 'char1');
-    char1.setScale(0.08)
-    
+    char1.setScale(0.08);
+    keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
+    knifes = game.add.group();
+    knifes.enableBody = true;
+    knifes.physicsBodyType = Phaser.Physics.ARCADE;
+    knifes.createMultiple(3, 'knife');
+    knifes.setAll('checkWorldBounds', true);
+    knifes.setAll('outOfBoundsKill', true);
 }
+
 
 function update () {
     const distance = Phaser.Math.Distance.Between(targetx,targety, char1.x, char1.y);
@@ -42,4 +60,13 @@ function update () {
         targety = pointer.worldY
         this.physics.moveTo(char1,pointer.worldX,pointer.worldY,240)
     }    
+    if(keyQ.isDown){  
+        attack();
+    }
+}
+
+function attack() {
+    bullet.reset(char1.x,char1.y);
+
+    game.physics.arcade.moveToPointer(knife, 300);
 }
