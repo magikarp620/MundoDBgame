@@ -40,9 +40,13 @@ function create () {
     socket.on('update',(msg)=>{
         char1.x = msg[1]['x']
         char1.y = msg[1]['y']
+        char1.kx = msg[1]['kx']
+        char1.ky = msg[1]['ky']
         if(2 in msg) {
             char2.x = msg[2]['x']
             char2.y = msg[2]['y']
+            char2.kx = msg[2]['kx']
+            char2.ky = msg[2]['ky']
         }
     })
     char1.setScale(0.08)

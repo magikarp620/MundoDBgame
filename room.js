@@ -14,11 +14,13 @@ class Room {
 
     update(){
         let msg = {}
+        let kang = {}
         for(const id in this.ids){
             const player = this.ids[id]
             player.move()
-            player.kmove(kangle)
+            player.kmove()
             msg[player.number] = {'x':player.x,'y':player.y}
+            kang[player.number] = {'kx':player.kx,'ky':player.ky}
         }
         return msg
     }

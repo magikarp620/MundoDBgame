@@ -28,6 +28,11 @@ io.on('connection', (socket) => {
             room.ids[socket.id].target = msg
         }
     })
+    socket.on("kpos", (kang) =>{
+        if(socket.id in room.ids){
+            room.ids[socket.id].kangle = kang
+        }
+    })
     socket.on('disconnect', () => {
         console.log('user disconnected');
         room.removePlayer(socket.id)
