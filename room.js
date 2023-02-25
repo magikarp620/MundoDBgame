@@ -49,4 +49,4 @@ class Room {
     }
 }
 
-module.exports = {Game: Room}
+module.exports = {Room};

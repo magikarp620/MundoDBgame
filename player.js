@@ -1,4 +1,6 @@
 const MOVE_SPEED = 15;
+const MAX_HP = 100;
+const Q_DMG = 10;
 class Player{
     x;
     y;
@@ -9,11 +11,13 @@ class Player{
     ktarget;
     number;
 
+
     constructor(x,y,number) {
-        this.number = number
-        this.x = x
-        this.y = y
-        this.target = {'targetX':x,'targetY':y}
+        this.number = number;
+        this.x = x;
+        this.y = y;
+        this.hp = MAX_HP;
+        this.target = {'targetX':x,'targetY':y};
         this.kx = x
         this.ky = y
     }
@@ -30,7 +34,7 @@ class Player{
     }
 
     kmove(kangle){
-        const speed = 10;
+        const speed = 30;
         this.kx += speed*Math.cos(kangle);
         this.ky += speed*Math.sin(kangle);
     }

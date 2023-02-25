@@ -1,13 +1,13 @@
-const game = require('./room')
+const Room = require('./room')
 const express = require('express');
 const app = express();
 const http = require('http');
 const server = http.createServer(app);
-const { Server } = require("socket.io");
+const {Server} = require("socket.io");
 const io = new Server(server);
 
 const port = 3000;
-const room = new game.Game();
+const room = new Room.Room();
 let update = false;
 io.on('connection', (socket) => {
     let interval;
@@ -18,26 +18,28 @@ io.on('connection', (socket) => {
         update = true;
     }
     console.log(`a user connected with id: ${socket.id}`);
-    if(!room.addPlayer(socket.id)){
+    if (!room.addPlayer(socket.id)) {
         console.log("room full")
+    } else {
+        io.to(socket.id).emit('assigned_number', room.ids[socket.id]['number']);
     }
     console.log(room.numPlayers())
-    socket.on("pos", (msg) =>{
+    socket.on("pos", (msg) => {
 
-        if(socket.id in room.ids){
+        if (socket.id in room.ids) {
             room.ids[socket.id].target = msg
         }
     })
-    socket.on("kpos", (kang) =>{
-        if(socket.id in room.ids){
-            room.ids[socket.id].kangle = kang
+    socket.on("kangle", (kang) => {
+        if (socket.id in room.ids) {
+            room.ids[socket.id].kangle = kang;
         }
-    })
+    });
     socket.on('disconnect', () => {
         console.log('user disconnected');
         room.removePlayer(socket.id)
         console.log(room.numPlayers())
-        if(room.numPlayers() === 0){
+        if (room.numPlayers() === 0) {
             clearInterval(interval)
             update = false;
         }
