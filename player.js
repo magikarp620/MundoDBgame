@@ -30,6 +30,7 @@ class Player{
     }
 
     kmove(kangle){
+        this.kangle = kangle
         const speed = 10;
         this.kx += speed*Math.cos(kangle);
         this.ky += speed*Math.sin(kangle);

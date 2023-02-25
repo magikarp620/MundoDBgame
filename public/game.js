@@ -40,18 +40,13 @@ function create () {
     socket.on('update',(msg)=>{
         char1.x = msg[1]['x']
         char1.y = msg[1]['y']
+        knife1.x = msg[1]['kx']
+        knife1.y = msg[1]['ky']
         if(2 in msg) {
             char2.x = msg[2]['x']
             char2.y = msg[2]['y']
-    
-        }
-    })
-    socket.on('kupdate', (kang) =>{
-        knife1.x = kang[1]['kx']
-        knife1.y = kang[1]['ky']
-        if(2 in msg) {
-            knife2.x = kang[2]['kx']
-            knife2.y = kang[2]['ky']
+            knife2.x = msg[2]['kx']
+            knife2.y = msg[2]['ky']
         }
     })
     char1.setScale(0.08)
@@ -83,7 +78,10 @@ function update () {
         const moveY = ktargety - char1.y;
         const angle = Math.atan2(moveY,moveX)
         // Calculate the direction from the object to the pointer
-        socket.emit("kpos1", {angle});
+        knife1.setActive();
+        knife1.setVisible();
+        console.log("q-recieve");
+        socket.emit("kpos", {angle});
         // Set the object's direction to the pointer direction
     });
        

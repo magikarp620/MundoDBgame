@@ -28,9 +28,9 @@ io.on('connection', (socket) => {
             room.ids[socket.id].target = msg
         }
     })
-    socket.on("kpos", (kang) =>{
+    socket.on("kpos", (msg) =>{
         if(socket.id in room.ids){
-            room.ids[socket.id].kangle = kang
+            room.ids[socket.id].kangle = msg
         }
     })
     socket.on('disconnect', () => {
