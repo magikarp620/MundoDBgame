@@ -22,21 +22,19 @@ function preload () {
     this.load.image("char1", "images/character1.webp")
     this.load.image("knife", "images/knife.png")
 }
-/*
-function init() {
-	// Listen to space & enter keys
-	var keys = [Phaser.KeyCode.Q];
-	// Create Phaser.Key objects for listening to the state
-	phaserKeys = game.input.keyboard.addKeys(keys);
-	// Capture these keys to stop the browser from receiving this event
-	game.input.keyboard.addKeyCapture(keys);
-}
-*/
+
 function create () {
     this.input.mouse.disableContextMenu();
     this.add.image(this.cameras.main.width / 2,this.cameras.main.height / 2, 
     'background')
     char1 = this.physics.add.sprite(280, 250, 'char1');
+    knife1 = this.physics.add.sprite(0,0,'knife');
+    knife2 = this.physics.add.sprite(0,0,'knife');
+    knife1.setActive(false);
+    knife1.setVisible(false);
+    knife1.setScale(0.7);
+    knife2.setActive(false);
+    knife2.setVisible(false);
     char1.setScale(0.08);
     let char2 = this.physics.add.sprite(420, 450, 'char1')
     socket.on('update',(msg)=>{
@@ -65,7 +63,20 @@ function update () {
     if(pointer.rightButtonDown()){
         targetx = pointer.worldX
         targety = pointer.worldY
-        socket.emit("pos", {targetx,targety })
+        socket.emit("pos", {targetx,targety})
         //this.physics.moveTo(char1,pointer.worldX,pointer.worldY,240)
     }    
+
+    this.input.keyboard.on('keydown-Q', ()=>{
+        ktargetx = pointer.worldX;
+        ktargety = pointer.worldY;
+        const moveX = ktargetx - char1.x;
+        const moveY = ktargety - char1.y;
+        const angle = Math.atan2(moveY,moveX)
+        // Calculate the direction from the object to the pointer
+        socket.emit("kpos1", {angle});
+        // Set the object's direction to the pointer direction
+    });
+       
+    
 }

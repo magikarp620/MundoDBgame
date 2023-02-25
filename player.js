@@ -3,6 +3,7 @@ class Player{
     y;
     target;
     number;
+
     constructor(x,y,number) {
         this.number = number
         this.x = x
@@ -20,5 +21,7 @@ class Player{
         this.x += speed*Math.cos(angle)
         this.y += speed*Math.sin(angle)
     }
+
 }
 module.exports = {Player}
+
