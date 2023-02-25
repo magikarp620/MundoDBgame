@@ -6,12 +6,17 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
-const port = 3000
-const room = new game.Game()
+const port = 3000;
+const room = new game.Game();
+let update = false;
 io.on('connection', (socket) => {
-    const interval = setInterval(()=>{
-        io.emit('update',room.update())
-    },40)
+    let interval;
+    if (!update) {
+        interval = setInterval(() => {
+            io.emit('update', room.update())
+        }, 40)
+        update = true;
+    }
     console.log(`a user connected with id: ${socket.id}`);
     if(!room.addPlayer(socket.id)){
         console.log("room full")
@@ -29,6 +34,7 @@ io.on('connection', (socket) => {
         console.log(room.numPlayers())
         if(room.numPlayers() === 0){
             clearInterval(interval)
+            update = false;
         }
     });
 });

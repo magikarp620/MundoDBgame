@@ -1,5 +1,7 @@
+const MOVE_SPEED = 15;
 class Player{
     x;
+
     y;
     target;
     number;
@@ -8,18 +10,18 @@ class Player{
         this.number = number
         this.x = x
         this.y = y
-        this.target = {'targetx':x,'targety':y}
+        this.target = {'targetX':x,'targetY':y}
     }
 
-    move(speed){
+    move(){
 
-        const moveX = this.target['targetx'] - this.x;
-        const moveY = this.target['targety'] - this.y;
-
-        speed = Math.min(Math.sqrt(moveX*moveX + moveY*moveY),speed)
+        const moveX = this.target['targetX'] - this.x;
+        const moveY = this.target['targetY'] - this.y;
+        let speed = Math.min(Math.sqrt(moveX*moveX + moveY*moveY),MOVE_SPEED)
         const angle = Math.atan2(moveY,moveX)
         this.x += speed*Math.cos(angle)
         this.y += speed*Math.sin(angle)
+
     }
 
 }

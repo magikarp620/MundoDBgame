@@ -12,8 +12,8 @@ const config = {
 }
 const game = new Phaser.Game(config)
 let char1
-let targetx = 280
-let targety = 250
+let targetX;
+let targetY;
 let socket = io()
 
 function preload () {
@@ -61,9 +61,9 @@ function update () {
      */
     const pointer = this.input.activePointer;
     if(pointer.rightButtonDown()){
-        targetx = pointer.worldX
-        targety = pointer.worldY
-        socket.emit("pos", {targetx,targety})
+        targetX = pointer.worldX
+        targetY = pointer.worldY
+        socket.emit("pos", {targetX,targetY})
         //this.physics.moveTo(char1,pointer.worldX,pointer.worldY,240)
     }    
 

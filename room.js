@@ -1,5 +1,5 @@
 const p = require('./player.js')
-const SPEED = 5;
+
 class Room {
 
     ids = {}
@@ -16,7 +16,7 @@ class Room {
         let msg = {}
         for(const id in this.ids){
             const player = this.ids[id]
-            player.move(SPEED)
+            player.move()
             msg[player.number] = {'x':player.x,'y':player.y}
         }
         return msg
