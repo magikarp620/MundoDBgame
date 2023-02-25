@@ -1,9 +1,12 @@
 const MOVE_SPEED = 15;
 class Player{
     x;
-
     y;
+    kx;
+    ky;
+    kangle;
     target;
+    ktarget;
     number;
 
     constructor(x,y,number) {
@@ -11,6 +14,8 @@ class Player{
         this.x = x
         this.y = y
         this.target = {'targetX':x,'targetY':y}
+        this.kx = x
+        this.ky = y
     }
 
     move(){
@@ -24,6 +29,11 @@ class Player{
 
     }
 
+    kmove(kangle){
+        const speed = 10;
+        this.kx += speed*Math.cos(kangle);
+        this.ky += speed*Math.sin(kangle);
+    }
 }
 module.exports = {Player}
 

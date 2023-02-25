@@ -17,6 +17,7 @@ class Room {
         for(const id in this.ids){
             const player = this.ids[id]
             player.move()
+            player.kmove(kangle)
             msg[player.number] = {'x':player.x,'y':player.y}
         }
         return msg
