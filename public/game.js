@@ -40,8 +40,8 @@ function create () {
     socket.on('update',(msg)=>{
         char1.x = msg[1]['x']
         char1.y = msg[1]['y']
-        knife1.x = msg[1]['kx']
-        knife1.y = msg[1]['ky']
+        knife1.x += msg[1]['kx']
+        knife1.y += msg[1]['ky']
         if(2 in msg) {
             char2.x = msg[2]['x']
             char2.y = msg[2]['y']
@@ -72,15 +72,17 @@ function update () {
     }    
 
     this.input.keyboard.on('keydown-Q', ()=>{
+        knife1.x = char1.x;
+        knife1.y = char1.y;
         ktargetx = pointer.worldX;
         ktargety = pointer.worldY;
         const moveX = ktargetx - char1.x;
         const moveY = ktargety - char1.y;
         const angle = Math.atan2(moveY,moveX)
         // Calculate the direction from the object to the pointer
-        knife1.setActive();
-        knife1.setVisible();
-        console.log("q-recieve");
+        knife1.setActive(true);
+        knife1.setVisible(true);
+        //console.log("q-recieve");
         socket.emit("kpos", {angle});
         // Set the object's direction to the pointer direction
     });
