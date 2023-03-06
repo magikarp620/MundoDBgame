@@ -32,7 +32,9 @@ io.on('connection', (socket) => {
     })
     socket.on("kpos", (msg) =>{
         if(socket.id in room.ids){
-            room.ids[socket.id].kangle = msg
+            room.ids[socket.id].kangle = msg.angle;
+            room.ids[socket.id].kx = room.ids[socket.id].x;
+            room.ids[socket.id].ky = room.ids[socket.id].y;
         }
     });
     socket.on('disconnect', () => {

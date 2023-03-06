@@ -14,11 +14,26 @@ class Room {
 
     update(){
         let msg = {}
+        const playerKeys = Object.keys(this.ids);
         for(const id in this.ids){
             const player = this.ids[id]
+            if(playerKeys.length == 2){
+                if(id === playerKeys[0]){
+                    //check distance of opponent's knife
+                    if((this.ids[playerKeys[1]].ky - player.y)*(this.ids[playerKeys[1]].ky - player.y)+(this.ids[playerKeys[1]].kx - player.x)*(this.ids[playerKeys[1]].kx - player.x) < 800){
+                        player.hp -= 0.25;
+                        console.log("hit");
+                    } 
+                }else{
+                    if((this.ids[playerKeys[0]].ky - player.y)*(this.ids[playerKeys[0]].ky - player.y)+(this.ids[playerKeys[0]].kx - player.x)*(this.ids[playerKeys[0]].kx - player.x) < 800){
+                        player.hp -= 0.25;
+                        console.log("hit");
+                    } 
+                }
+            }
             player.move()
             player.kmove()
-            msg[player.number] = {'x':player.x,'y':player.y,'kx':player.kx,'ky':player.ky}
+            msg[player.number] = {'x':player.x,'y':player.y,'kx':player.kx,'ky':player.ky, 'hp':player.hp}
         }
         return msg
     }

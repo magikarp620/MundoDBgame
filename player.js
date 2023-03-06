@@ -1,11 +1,12 @@
 const MOVE_SPEED = 15;
-const MAX_HP = 100;
+const MAX_HP = 1;
 const Q_DMG = 10;
 class Player{
     x;
     y;
     kx;
     ky;
+    hp;
     kangle;
     target;
     ktarget;
@@ -33,11 +34,12 @@ class Player{
 
     }
 
-    kmove(kangle){
-        this.kangle = kangle
+    kmove(){
+        
+        
         const speed = 30;
-        this.kx += speed*Math.cos(kangle);
-        this.ky += speed*Math.sin(kangle);
+        this.kx += speed*Math.cos(this.kangle);
+        this.ky += speed*Math.sin(this.kangle);
     }
 }
 module.exports = {Player}
