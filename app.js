@@ -1,53 +1,52 @@
-const Room = require('./room')
-const express = require('express');
+const Room = require("./room");
+const express = require("express");
 const app = express();
-const http = require('http');
+const http = require("http");
 const server = http.createServer(app);
-const {Server} = require("socket.io");
+const { Server } = require("socket.io");
 const io = new Server(server);
 
 const port = 3000;
 const room = new Room.Room();
 let update = false;
-io.on('connection', (socket) => {
+io.on("connection", (socket) => {
     let interval;
     if (!update) {
         interval = setInterval(() => {
-            io.emit('update', room.update())
-        }, 40)
+            io.emit("update", room.update());
+        }, 40);
         update = true;
     }
     console.log(`a user connected with id: ${socket.id}`);
     if (!room.addPlayer(socket.id)) {
-        console.log("room full")
+        console.log("room full");
     } else {
-        io.to(socket.id).emit('assigned_number', room.ids[socket.id]['number']);
+        io.to(socket.id).emit("assigned_number", room.ids[socket.id]["number"]);
     }
-    console.log(room.numPlayers())
+    console.log(room.numPlayers());
     socket.on("pos", (msg) => {
-
         if (socket.id in room.ids) {
-            room.ids[socket.id].target = msg
-        }
-    })
-    socket.on("kpos", (msg) =>{
-        if(socket.id in room.ids){
-            room.ids[socket.id].kangle = msg
+            room.ids[socket.id].target = msg;
         }
     });
-    socket.on('disconnect', () => {
-        console.log('user disconnected');
-        room.removePlayer(socket.id)
-        console.log(room.numPlayers())
+    socket.on("kpos", (msg) => {
+        if (socket.id in room.ids) {
+            room.ids[socket.id].kangle = msg;
+        }
+    });
+    socket.on("disconnect", () => {
+        console.log("user disconnected");
+        room.removePlayer(socket.id);
+        console.log(room.numPlayers());
         if (room.numPlayers() === 0) {
-            clearInterval(interval)
+            clearInterval(interval);
             update = false;
         }
     });
 });
 
 server.listen(port, () => {
-    console.log('listening on *:3000');
+    console.log("listening on *:3000");
 });
 
-app.use(express.static('public'))
+app.use(express.static("public"));
