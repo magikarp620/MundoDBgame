@@ -1,7 +1,7 @@
-import {HpBar} from "./hp.js";
+import { HpBar } from "./hp.js";
 
 const config = {
-    physics: {default: "arcade"},
+    physics: { default: "arcade" },
     type: Phaser.AUTO,
     width: 953,
     height: 720,
@@ -10,34 +10,33 @@ const config = {
         //init: init,
         create: create,
         update: update,
-    }
-}
-const game = new Phaser.Game(config)
+    },
+};
+const game = new Phaser.Game(config);
 
 let targetX;
 let targetY;
 let socket = io({
-    'reconnection': true,
-    'reconnectionDelay': 1000,
-    'reconnectionDelayMax': 5000,
-    'reconnectionAttempts': 5
+    reconnection: true,
+    reconnectionDelay: 1000,
+    reconnectionDelayMax: 5000,
+    reconnectionAttempts: 5,
 });
 let playerNum;
 let p1Color, p2Color;
-socket.on('disconnect', () => console.log("disconnected"))
-socket.on('assigned_number', (msg) => {
+socket.on("disconnect", () => console.log("disconnected"));
+socket.on("assigned_number", (msg) => {
     playerNum = msg;
     console.log(`I am player ${msg}`);
-    p1Color = playerNum === 2 ? 0xFF0000 : 0x00FF00;
-    p2Color = playerNum === 1 ? 0xFF0000 : 0x00FF00;
+    p1Color = playerNum === 2 ? 0xff0000 : 0x00ff00;
+    p2Color = playerNum === 1 ? 0xff0000 : 0x00ff00;
 });
 
-
 function preload() {
-    console.log("load")
-    this.load.image("background", 'images/baronpit.jpg')
-    this.load.image("char1", "images/character1.webp")
-    this.load.image("knife", "images/knife.png")
+    console.log("load");
+    this.load.image("background", "images/baronpit.jpg");
+    this.load.image("char1", "images/character1.webp");
+    this.load.image("knife", "images/knife.png");
 }
 
 function create() {
@@ -56,7 +55,7 @@ function create() {
     let char1 = this.physics.add.sprite(280, 250, 'char1');
     char1.setScale(0.08);
     let hp1 = new HpBar(this, char1.x, char1.y, p1Color);
-    let char2 = this.physics.add.sprite(420, 450, 'char1');
+    let char2 = this.physics.add.sprite(420, 450, "char1");
     char2.setScale(0.08);
     let hp2 = new HpBar(this, char2.x, char2.y, p2Color);
     hp1.value = 1;
@@ -111,11 +110,8 @@ function create() {
             //hp2.value = 0.8;
             hp2.draw();
         }
-    })
-
-
+    });
 }
-
 
 function update() {
     /*
@@ -129,9 +125,9 @@ function update() {
     const pointer = this.input.activePointer;
 
     if (pointer.rightButtonDown()) {
-        targetX = pointer.worldX
-        targetY = pointer.worldY
-        socket.emit("pos", {targetX, targetY})
+        targetX = pointer.worldX;
+        targetY = pointer.worldY;
+        socket.emit("pos", { targetX, targetY });
         //this.physics.moveTo(char1,pointer.worldX,pointer.worldY,240)
     }
 
