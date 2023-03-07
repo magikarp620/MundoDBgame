@@ -1,6 +1,5 @@
 const MOVE_SPEED = 15;
 const MAX_HP = 1;
-const Q_DMG = 10;
 
 class Player {
     x;
@@ -35,12 +34,10 @@ class Player {
         this.y += speed * Math.sin(angle);
     }
 
-    kmove(){
-        
-        
+    kmove() {
         const speed = 30;
-        this.kx += speed*Math.cos(this.kangle);
-        this.ky += speed*Math.sin(this.kangle);
+        this.kx += speed * Math.cos(this.kangle);
+        this.ky += speed * Math.sin(this.kangle);
     }
 }
 

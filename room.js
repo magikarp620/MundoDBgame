@@ -12,28 +12,43 @@ class Room {
         return this.#size;
     }
 
-    update(){
-        let msg = {}
+    //returns true if within range
+    knifeHit(knife, player) {
+        return (
+            Math.pow(knife.ky - player.y, 2) +
+            Math.pow(knife.kx - player.x, 2) <
+            800
+        );
+    }
+
+    update() {
+        let msg = {};
         const playerKeys = Object.keys(this.ids);
-        for(const id in this.ids){
-            const player = this.ids[id]
-            if(playerKeys.length == 2){
-                if(id === playerKeys[0]){
+        for (const id in this.ids) {
+            const player = this.ids[id];
+            if (playerKeys.length === 2) {
+                if (id === playerKeys[0]) {
                     //check distance of opponent's knife
-                    if((this.ids[playerKeys[1]].ky - player.y)*(this.ids[playerKeys[1]].ky - player.y)+(this.ids[playerKeys[1]].kx - player.x)*(this.ids[playerKeys[1]].kx - player.x) < 800){
+                    if (this.knifeHit(this.ids[playerKeys[1]], player)) {
                         player.hp -= 0.25;
                         console.log("hit");
-                    } 
-                }else{
-                    if((this.ids[playerKeys[0]].ky - player.y)*(this.ids[playerKeys[0]].ky - player.y)+(this.ids[playerKeys[0]].kx - player.x)*(this.ids[playerKeys[0]].kx - player.x) < 800){
+                    }
+                } else {
+                    if (this.knifeHit(this.ids[playerKeys[1]], player)) {
                         player.hp -= 0.25;
                         console.log("hit");
-                    } 
+                    }
                 }
             }
-            player.move()
-            player.kmove()
-            msg[player.number] = {'x':player.x,'y':player.y,'kx':player.kx,'ky':player.ky, 'hp':player.hp}
+            player.move();
+            player.kmove();
+            msg[player.number] = {
+                x: player.x,
+                y: player.y,
+                kx: player.kx,
+                ky: player.ky,
+                hp: player.hp,
+            };
         }
         return msg;
     }
