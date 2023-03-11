@@ -1,4 +1,4 @@
-const p = require("./player.js");
+const p = require('./player.js');
 
 class Room {
     ids = {};
@@ -6,6 +6,7 @@ class Room {
 
     constructor() {
         this.#size = 0;
+        this.code = Math.floor(100000 + Math.random() * 900000);
     }
 
     numPlayers() {
@@ -16,7 +17,7 @@ class Room {
     knifeHit(knife, player) {
         return (
             Math.pow(knife.ky - player.y, 2) +
-            Math.pow(knife.kx - player.x, 2) <
+                Math.pow(knife.kx - player.x, 2) <
             800
         );
     }
@@ -31,12 +32,12 @@ class Room {
                     //check distance of opponent's knife
                     if (this.knifeHit(this.ids[playerKeys[1]], player)) {
                         player.hp -= 0.25;
-                        console.log("hit");
+                        console.log('hit');
                     }
                 } else {
                     if (this.knifeHit(this.ids[playerKeys[1]], player)) {
                         player.hp -= 0.25;
-                        console.log("hit");
+                        console.log('hit');
                     }
                 }
             }
@@ -76,4 +77,4 @@ class Room {
     }
 }
 
-module.exports = {Room};
+module.exports = { Room };

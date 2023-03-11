@@ -23,8 +23,8 @@ class Player {
     }
 
     move() {
-        const moveX = this.target["targetX"] - this.x;
-        const moveY = this.target["targetY"] - this.y;
+        const moveX = this.target['targetX'] - this.x;
+        const moveY = this.target['targetY'] - this.y;
         let speed = Math.min(
             Math.sqrt(moveX * moveX + moveY * moveY),
             MOVE_SPEED
