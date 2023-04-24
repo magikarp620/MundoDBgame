@@ -4,9 +4,10 @@ class Room {
     ids = {};
     #size;
 
-    constructor() {
+    constructor(socketRoom) {
         this.#size = 0;
         this.code = Math.floor(100000 + Math.random() * 900000);
+        this.socketRoom = socketRoom;
     }
 
     numPlayers() {
@@ -35,7 +36,7 @@ class Room {
                         console.log('hit');
                     }
                 } else {
-                    if (this.knifeHit(this.ids[playerKeys[1]], player)) {
+                    if (this.knifeHit(this.ids[playerKeys[0]], player)) {
                         player.hp -= 0.25;
                         console.log('hit');
                     }
